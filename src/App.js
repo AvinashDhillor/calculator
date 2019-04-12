@@ -1,13 +1,14 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import './App.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      display: "",
-      upperScreen: "",
+      display: '',
+      upperScreen: '',
       decimalExists: false,
-      operator: "",
+      operator: '',
       ResultExists: false
     };
     this.initial = this.initial.bind(this);
@@ -19,17 +20,17 @@ class App extends Component {
 
   initial() {
     this.setState({
-      display: "",
+      display: '',
       decimalExists: false,
-      upperScreen: "",
+      upperScreen: '',
       ResultExists: false,
-      operator: ""
+      operator: ''
     });
   }
 
   calculate() {
     let expresion;
-    if (this.state.operator !== "") {
+    if (this.state.operator !== '') {
       expresion = this.state.upperScreen.slice(0, -1);
     } else {
       expresion = this.state.upperScreen;
@@ -50,13 +51,13 @@ class App extends Component {
       await this.initial();
     }
 
-    if (this.state.operator === "") {
+    if (this.state.operator === '') {
       prevValue = this.state.display;
     } else {
-      prevValue = "";
+      prevValue = '';
     }
     let prevUpperValue = this.state.upperScreen;
-    if (prevValue === "0" && value === "0") {
+    if (prevValue === '0' && value === '0') {
       return;
     }
     let newValue = prevValue + value;
@@ -65,7 +66,7 @@ class App extends Component {
       display: newValue,
       initial: false,
       upperScreen: newUpperValue,
-      operator: ""
+      operator: ''
     });
   }
 
@@ -74,8 +75,8 @@ class App extends Component {
       return;
     }
     this.setState(prevState => ({
-      display: prevState.display + ".",
-      upperScreen: prevState.upperScreen + ".",
+      display: prevState.display + '.',
+      upperScreen: prevState.upperScreen + '.',
       decimalExists: true
     }));
   }
@@ -89,7 +90,7 @@ class App extends Component {
       });
     }
 
-    if (this.state.operator === "") {
+    if (this.state.operator === '') {
       this.setState(prevState => ({
         operator: value,
         display: value,
@@ -97,24 +98,27 @@ class App extends Component {
         decimalExists: false
       }));
     } else {
-      let upperScreenValue = this.state.upperScreen.split("");
+      let upperScreenValue = this.state.upperScreen.split('');
       upperScreenValue[upperScreenValue.length - 1] = value;
       this.setState(prevState => ({
         operator: value,
         display: value,
         decimalExists: false,
-        upperScreen: upperScreenValue.join("")
+        upperScreen: upperScreenValue.join('')
       }));
     }
   }
 
   render() {
     return (
-      <div>
-        <Display
-          displayValue={this.state.display}
-          upperScreen={this.state.upperScreen}
-        />
+      <div className="cal_body">
+        <div className="cal_display">
+          <Display
+            displayValue={this.state.display}
+            upperScreen={this.state.upperScreen}
+          />
+        </div>
+
         <Buttons
           calculate={this.calculate}
           number={this.number}
@@ -132,64 +136,152 @@ const Display = props => (
   <div>
     <div id="upperscreen">{props.upperScreen}</div>
     <div id="display">
-      {props.displayValue === "" ? 0 : props.displayValue}{" "}
+      {props.displayValue === '' ? 0 : props.displayValue}{' '}
     </div>
   </div>
 );
 
 //Button keypad of calculator
 const Buttons = props => (
-  <div>
-    <button onClick={props.calculate} id="equals" value="=">
-      =
+  <div className="cal_buttons">
+    <button
+      onClick={props.initial}
+      className="btn btn-danger"
+      id="clear"
+      value="C"
+    >
+      C
     </button>
-    <button onClick={props.number} id="zero" value="0">
-      0
-    </button>
-    <button onClick={props.number} id="one" value="1">
+
+    <button
+      onClick={props.number}
+      className="btn btn-primary"
+      id="one"
+      value="1"
+    >
       1
     </button>
-    <button onClick={props.number} id="two" value="2">
+    <button
+      onClick={props.number}
+      className="btn btn-primary"
+      id="two"
+      value="2"
+    >
       2
     </button>
-    <button onClick={props.number} id="three" value="3">
-      3
-    </button>
-    <button onClick={props.number} id="four" value="4">
-      4
-    </button>
-    <button onClick={props.number} id="five" value="5">
-      5
-    </button>
-    <button onClick={props.number} id="six" value="6">
-      6
-    </button>
-    <button onClick={props.number} id="seven" value="7">
-      7
-    </button>
-    <button onClick={props.number} id="eight" value="8">
-      8
-    </button>
-    <button onClick={props.number} id="nine" value="9">
-      9
-    </button>
-    <button onClick={props.operator} id="add" value="+">
+    <button
+      onClick={props.operator}
+      className="btn btn-success"
+      id="add"
+      value="+"
+    >
       +
     </button>
-    <button onClick={props.operator} id="subtract" value="-">
+    <button
+      onClick={props.number}
+      className="btn btn-primary"
+      id="three"
+      value="3"
+    >
+      3
+    </button>
+    <button
+      onClick={props.number}
+      className="btn btn-primary"
+      id="four"
+      value="4"
+    >
+      4
+    </button>
+    <button
+      onClick={props.number}
+      className="btn btn-primary"
+      id="five"
+      value="5"
+    >
+      5
+    </button>
+    <button
+      onClick={props.operator}
+      className="btn btn-success"
+      id="subtract"
+      value="-"
+    >
       -
     </button>
-    <button onClick={props.operator} id="multiply" value="*">
+    <button
+      onClick={props.number}
+      className="btn btn-primary"
+      id="six"
+      value="6"
+    >
+      6
+    </button>
+    <button
+      onClick={props.number}
+      className="btn btn-primary"
+      id="seven"
+      value="7"
+    >
+      7
+    </button>
+    <button
+      onClick={props.number}
+      className="btn btn-primary"
+      id="eight"
+      value="8"
+    >
+      8
+    </button>
+
+    <button
+      onClick={props.operator}
+      className="btn btn-success"
+      id="multiply"
+      value="*"
+    >
       *
     </button>
-    <button onClick={props.operator} id="divide" value="/">
-      /
+    <button
+      onClick={props.number}
+      className="btn btn-primary"
+      id="nine"
+      value="9"
+    >
+      9
     </button>
-    <button onClick={props.decimal} id="decimal" value=".">
+
+    <button
+      onClick={props.decimal}
+      className="btn btn-warning"
+      id="decimal"
+      value="."
+    >
       .
     </button>
-    <button onClick={props.initial} id="clear" value="C">
-      C
+    <button
+      onClick={props.number}
+      className="btn btn-primary"
+      id="zero"
+      value="0"
+    >
+      0
+    </button>
+    <button
+      onClick={props.operator}
+      className="btn btn-success"
+      id="divide"
+      value="/"
+    >
+      /
+    </button>
+    <button
+      onClick={props.calculate}
+      className="btn btn-danger btn-lg btn-block"
+      id="equals"
+      value="="
+    >
+      =
     </button>
   </div>
 );
